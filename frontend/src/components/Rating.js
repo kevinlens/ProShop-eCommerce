@@ -79,8 +79,8 @@ Rating.defaultProps = {
 
 //this helps make sure the props require specific types like arrays, objects, functions, in order to be passed and work
 Rating.propTypes = {
-  value: PropTypes.number.isRequired,
-  text: PropTypes.string.isRequired,
+  value: PropTypes.number,
+  text: PropTypes.string,
   color: PropTypes.string,
 }
 
