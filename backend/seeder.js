@@ -13,7 +13,7 @@ dotenv.config();
 connectDB();
 
 //Script we use to import data
-
+//Think of this as a reset button for all the data, or to quickly import them
 const importData = async () => {
   try {
     //completely wipe out database
@@ -28,16 +28,36 @@ const importData = async () => {
     //the 'id' is by default created when it reaches the DB
     const adminUser = createdUsers[0]._id;
 
-    //add the admin 'user' to the product
+    //add the admin 'user' to the products file
     const sampleProducts = products.map((product) => {
       return { ...product, user: adminUser };
     });
 
     //import in all the sample products with the admin users into Product DB
-    await Product.instertMany(sampleProducts)
+    await Product.instertMany(sampleProducts);
 
-    console.log('Data Imported! 🥑')
+    console.log('Data Imported! 🥑');
+    //no returns but rather exit()
+    process.exit();
   } catch (error) {
-    console.error(`${error}❗️`)
+    console.error(`${error}❗️`);
+    //passing in a 1 means exit with failure
+    process.exit(1);
+  }
+};
+
+const destroyData = async () => {
+  try {
+    //completely wipe out database
+    await Order.deleteMany();
+    await Product.deleteMany();
+    await User.deleteMany();
+
+    console.log('Data destroyed! 🥑');
+    process.exit();
+  } catch (error) {
+    console.error(`${error}❗️`);
+    //passing in a 1 means exit with failure
+    process.exit(1);
   }
 };
