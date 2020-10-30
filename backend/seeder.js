@@ -1,15 +1,15 @@
-import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import colors from 'colors';
 import users from './data/users.js';
 import products from './data/products.js';
-import User from './models/userModel.js';
-import Product from './models/productModel.js';
-import Order from './models/orderModel.js';
+import User from './models/UserModel.js';
+import Product from './models/ProductModel.js';
+import Order from './models/OrderModel.js';
 import connectDB from './config/db.js';
 
 dotenv.config();
 
+//links software to db
+//this also selects the name of the database we target and its collections
 connectDB();
 
 //Script we use to import data
@@ -34,9 +34,9 @@ const importData = async () => {
     });
 
     //import in all the sample products with the admin users into Product DB
-    await Product.instertMany(sampleProducts);
+    await Product.insertMany(sampleProducts);
 
-    console.log('Data Imported! 🥑');
+    console.log('Data Imported! ✅');
     //no returns but rather exit()
     process.exit();
   } catch (error) {
@@ -53,7 +53,7 @@ const destroyData = async () => {
     await Product.deleteMany();
     await User.deleteMany();
 
-    console.log('Data destroyed! 🥑');
+    console.log('Data destroyed! ✅');
     process.exit();
   } catch (error) {
     console.error(`${error}❗️`);
@@ -61,3 +61,12 @@ const destroyData = async () => {
     process.exit(1);
   }
 };
+
+//if the command line has "node backend/seeder" but with a '-d' then destroy data else
+//we made a shortcut for that command in the root package.json 
+//don't use this unless you know what you're doing bc it will remove all your data
+if (process.argv[2] === '-d') {
+  // destroyData();
+} else {
+  // importData();
+}

@@ -20,7 +20,7 @@ const productSchema = mongoose.Schema(
       required: true,
     },
     category: {
-      type: Boolean,
+      type: String,
       required: true,
     },
     description: {
@@ -34,7 +34,7 @@ const productSchema = mongoose.Schema(
         comment: { type: String, required: true },
       },
       {
-        timestamps,
+        timestamps: true,
       },
     ],
     rating: {

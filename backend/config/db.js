@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 
-//mongoose connect to to DB
+//mongoose software to link to DB
+//this also selects the name of the database we target and its collections
 const connectDB = async () => {
   try {
     const conn = await mongoose.connect(process.env.MONGO_URI, {
