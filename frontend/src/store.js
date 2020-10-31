@@ -5,9 +5,18 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 // tools necessary to use the Redux Dev Tools
 import { composeWithDevTools } from 'redux-devtools-extension';
+//------------
+import {
+  productListReducer,
+  productDetailsReducer,
+} from './reducers/productReducers';
+
 //======================================================================
 
-const reducer = combineReducers({});
+const reducer = combineReducers({
+  productList: productListReducer,
+  productDetails: productDetailsReducer,
+});
 
 const initalState = {};
 
