@@ -31,7 +31,11 @@ router.get(
     if (product) {
       res.json(product);
     } else {
-      res.status(404).json({ message: 'Product not found' });
+      //you don't need to even use this
+      res.status(404);
+      /*This is a new way of throwing our own error without having to use the res.status.json({})
+      as we also have the custom built error handler for other errors already */
+      throw new Error('Product not found');
     }
 
     //
