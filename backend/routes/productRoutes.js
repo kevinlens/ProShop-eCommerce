@@ -1,4 +1,5 @@
 import express from 'express';
+//gets rid of the '.then()' syntax
 import asyncHandler from 'express-async-handler';
 const router = express.Router();
 import Product from '../models/ProductModel.js';
@@ -9,6 +10,8 @@ import Product from '../models/ProductModel.js';
 router.get(
   '/',
   asyncHandler(async (req, res) => {
+    /*we don't have a 'catch' from try,catch method for errors because all the errors gets passed 
+    down to our custom made middlware error handlers*/
     const products = await Product.find({});
 
     res.json(products);
@@ -21,6 +24,8 @@ router.get(
 router.get(
   '/:id',
   asyncHandler(async (req, res) => {
+    /*we don't have a 'catch' from try,catch method for errors because all the errors gets passed 
+    down to our custom made middlware error handlers*/
     const product = await Product.findById(req.params.id);
 
     if (product) {
