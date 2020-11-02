@@ -18,7 +18,7 @@ const CartScreen = ({ match, location, history }) => {
   //
   const productId = match.params.id;
 
-  //the query params, ex: ?qty=3. split '=' means split it into an array and get it at the second index
+  //the 'search' means: query params, ex: ?qty=3. split '=' means split it into an array and get it at the second index
   const qty = location.search ? Number(location.search.split('=')[1]) : 1;
 
   const dispatch = useDispatch();
