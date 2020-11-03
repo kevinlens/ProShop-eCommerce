@@ -10,6 +10,10 @@ import {
   USER_REGISTER_FAIL,
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
+  USER_UPDATE_PROFILE_REQUEST,
+  USER_UPDATE_PROFILE_SUCCESS,
+  USER_UPDATE_PROFILE_FAIL,
+  REMOVE_SUCCESS_ALERT,
 } from '../constants/userConstants';
 
 //
@@ -126,7 +130,7 @@ export const register = (name, email, password) => async (dispatch) => {
 
 //
 
-export const getUserDetails = (id) => async (dispatch, getState) => {
+export const getUserDetails = () => async (dispatch, getState) => {
   try {
     dispatch({
       type: USER_DETAILS_REQUEST,
@@ -147,7 +151,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
     //
 
     //destructure the 'res.data' which we got back
-    const { data } = await axios.get(`/api/users/${id}`, config);
+    const { data } = await axios.get(`/api/users/profile`, config);
 
     dispatch({
       type: USER_DETAILS_SUCCESS,
@@ -157,12 +161,62 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
     //
   } catch (error) {
     dispatch({
-      type: USER_REGISTER_FAIL,
+      type: USER_DETAILS_FAIL,
       //if error.response exist THEN if data.message exist then send the data.message else the error.message
       payload:
         error.response && error.response.data.message
-          ? error.response.data.message.replace('User validation failed:', '')
-          : error.message.replace('User validation failed:', ''),
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+//
+
+//
+
+//
+
+export const updateUserProfile = (user) => async (dispatch, getState) => {
+  try {
+    if (user) {
+      dispatch({
+        type: USER_UPDATE_PROFILE_REQUEST,
+      });
+      //
+
+      const {
+        userLogin: { userInfo },
+      } = getState();
+
+      //
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+      //
+
+      //destructure the 'res.data' which we got back
+      const { data } = await axios.put(`/api/users/profile`, user, config);
+      dispatch({
+        type: USER_UPDATE_PROFILE_SUCCESS,
+        payload: data,
+      });
+    } else {
+      dispatch({
+        type: REMOVE_SUCCESS_ALERT,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: USER_UPDATE_PROFILE_FAIL,
+      //if error.response exist THEN if data.message exist then send the data.message else the error.message
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
     });
   }
 };
