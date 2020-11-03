@@ -204,6 +204,19 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
         type: USER_UPDATE_PROFILE_SUCCESS,
         payload: data,
       });
+
+      //==========These are extras for quick fixes
+      dispatch({
+        type: USER_DETAILS_SUCCESS,
+        payload: data,
+      });
+
+      //Update user profile name
+      dispatch({
+        type: USER_LOGIN_SUCCESS,
+        payload: data,
+      });
+      localStorage.setItem('userInfo', JSON.stringify(data));
     } else {
       dispatch({
         type: REMOVE_SUCCESS_ALERT,

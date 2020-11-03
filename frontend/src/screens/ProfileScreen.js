@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { getUserDetails, updateUserProfile } from '../actions/userActions';
+import { USER_UPDATE_PROFILE_RESET } from '../constants/userConstants';
 
 const ProfileScreen = ({ location, history }) => {
   const [name, setName] = useState('');
@@ -43,6 +44,7 @@ const ProfileScreen = ({ location, history }) => {
       //if user is logged in but if the user.name in User Detail does not exist then call, 'get the current user profile detail'
       //check the global state of User Detail
       if (!user.name) {
+        dispatch({ type: USER_UPDATE_PROFILE_RESET });
         dispatch(getUserDetails());
       } else {
         //else if logged in and User Detail is there then setup and fill out the forms
@@ -55,13 +57,16 @@ const ProfileScreen = ({ location, history }) => {
       return () => clearTimeout(timer);
     }
     //gets invoked whenever any of these changes
-  }, [dispatch, history, userInfo, user,success]);
+  }, [dispatch, history, userInfo, user, success]);
 
   //===================================================================================
   const submitHandler = (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
       setMessage('Passwords do not match');
+      setTimeout(() => {
+        setMessage('');
+      }, 2000);
     } else {
       dispatch(updateUserProfile({ id: user._id, name, email, password }));
     }

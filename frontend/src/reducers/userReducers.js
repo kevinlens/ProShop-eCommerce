@@ -12,7 +12,8 @@ import {
   USER_UPDATE_PROFILE_REQUEST,
   USER_UPDATE_PROFILE_SUCCESS,
   USER_UPDATE_PROFILE_FAIL,
-  REMOVE_SUCCESS_ALERT
+  REMOVE_SUCCESS_ALERT,
+  USER_UPDATE_PROFILE_RESET,
 } from '../constants/userConstants';
 //
 
@@ -82,9 +83,11 @@ export const userUpdateProfileReducer = (state = {}, action) => {
     case USER_UPDATE_PROFILE_SUCCESS:
       return { loading: false, success: true, userInfo: action.payload };
     case REMOVE_SUCCESS_ALERT:
-      return {success: false };
+      return { success: false };
     case USER_UPDATE_PROFILE_FAIL:
       return { loading: false, error: action.payload };
+    case USER_UPDATE_PROFILE_RESET:
+      return {};
     default:
       return state;
   }
