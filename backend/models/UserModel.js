@@ -1,20 +1,24 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
+//Powerful ToolKit to Validate
+import validator from 'validator';
 
 const userSchema = mongoose.Schema(
   {
     name: {
       type: String,
-      required: true,
+      required: [true, 'Please tell us your name!'],
     },
     email: {
       type: String,
       required: true,
       unique: true,
+      required: [true, 'Please provide a password'],
+      validate: [validator.isEmail, 'Please provide a valid email'],
     },
     password: {
       type: String,
-      required: true,
+      required: [true, 'Please provide a password'],
     },
     isAdmin: {
       type: Boolean,

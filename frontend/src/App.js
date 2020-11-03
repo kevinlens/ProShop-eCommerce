@@ -9,6 +9,7 @@ import HomeScreen from './screens/HomeScreen';
 import ProductScreen from './screens/ProductScreen';
 import CartScreen from './screens/CartScreen';
 import LoginScreen from './screens/LoginScreen';
+import RegisterScreen from './screens/RegisterScreen';
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
         {/* container help centers everything */}
         <Container>
           <Route path='/login' exact component={LoginScreen} />
+          <Route path='/register' exact component={RegisterScreen} />
           <Route path='/product/:id' exact component={ProductScreen} />
           <Route path='/cart/:id?' exact component={CartScreen} />
           <Route path='/' exact component={HomeScreen} />
