@@ -32,6 +32,7 @@ const CartScreen = ({ match, location, history }) => {
     if (productId) {
       dispatch(addToCart(productId, qty));
     }
+    //gets invoked whenever any of these changes
   }, [dispatch, productId, qty]);
 
   const removeFromCartHandler = (id) => {

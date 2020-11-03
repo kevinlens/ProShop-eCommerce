@@ -33,6 +33,7 @@ const RegisterScreen = ({ location, history }) => {
       //redirect user to main page with '/' as 'redirect'
       history.push(redirect);
     }
+    //gets invoked whenever any of these changes
   }, [history, userInfo, redirect]);
 
   const submitHandler = (e) => {

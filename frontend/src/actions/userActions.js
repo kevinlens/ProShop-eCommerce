@@ -1,5 +1,8 @@
 import axios from 'axios';
 import {
+  USER_DETAILS_REQUEST,
+  USER_DETAILS_SUCCESS,
+  USER_DETAILS_FAIL,
   USER_LOGIN_FAIL,
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
@@ -144,7 +147,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
     //
 
     //destructure the 'res.data' which we got back
-    const { data } = await axios.post(`/api/users/${id}`, config);
+    const { data } = await axios.get(`/api/users/${id}`, config);
 
     dispatch({
       type: USER_DETAILS_SUCCESS,

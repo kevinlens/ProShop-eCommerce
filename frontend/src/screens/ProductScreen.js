@@ -27,6 +27,7 @@ const ProductScreen = ({ history, match }) => {
 
   useEffect(() => {
     dispatch(listProductDetails(match.params.id));
+    //gets invoked whenever any of these changes
   }, [dispatch, match]);
 
   //==============================================================
