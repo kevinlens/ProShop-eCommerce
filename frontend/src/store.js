@@ -29,18 +29,25 @@ const reducer = combineReducers({
   userDetails: userDetailsReducer,
   userUpdateProfile: userUpdateProfileReducer,
 });
-
+//these are important to make them available from beginning in case page is reloaded/refresh
 const cartItemsFromStorage = localStorage.getItem('cartItems')
   ? JSON.parse(localStorage.getItem('cartItems'))
   : [];
-
+//these are important to make them available from beginning in case page is reloaded/refresh
 const userInfoFromStorage = localStorage.getItem('userInfo')
   ? JSON.parse(localStorage.getItem('userInfo'))
   : null;
+//these are important to make them available from beginning in case page is reloaded/refresh
+const shippingAddressFromStorage = localStorage.getItem('shippingAddress')
+  ? JSON.parse(localStorage.getItem('shippingAddress'))
+  : {};
 
 //default values for the 'reducer' variable upon load (Just in case person reloads/refreshes page)
 const initalState = {
-  cart: { cartItems: cartItemsFromStorage },
+  cart: {
+    cartItems: cartItemsFromStorage,
+    shippingAddress: shippingAddressFromStorage,
+  },
   userLogin: { userInfo: userInfoFromStorage },
 };
 
