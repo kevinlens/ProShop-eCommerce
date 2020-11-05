@@ -17,6 +17,7 @@ import {
   userDetailsReducer,
   userUpdateProfileReducer,
 } from './reducers/userReducers';
+import { orderCreateReducer } from './reducers/orderReducers';
 
 //======================================================================
 
@@ -28,6 +29,7 @@ const reducer = combineReducers({
   userRegister: userRegisterReducer,
   userDetails: userDetailsReducer,
   userUpdateProfile: userUpdateProfileReducer,
+  orderCreate: orderCreateReducer,
 });
 //these are important to make them available from beginning in case page is reloaded/refresh
 const cartItemsFromStorage = localStorage.getItem('cartItems')
