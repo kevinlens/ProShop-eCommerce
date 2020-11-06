@@ -9,6 +9,9 @@ import {
   ORDER_PAY_REQUEST,
   ORDER_PAY_SUCCESS,
   ORDER_PAY_FAIL,
+  ORDER_MY_LIST_REQUEST,
+  ORDER_MY_LIST_SUCCESS,
+  ORDER_MY_LIST_FAIL,
 } from '../constants/orderConstants';
 
 //
@@ -143,6 +146,50 @@ export const payOrder = (orderId, paymentResult) => async (
   } catch (error) {
     dispatch({
       type: ORDER_PAY_FAIL,
+      //if error.response exist THEN if data.message exist then send the data.message else the error.message
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+//
+
+//
+
+//
+
+export const listMyOrders = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: ORDER_MY_LIST_REQUEST,
+    });
+    //
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    //
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    //
+
+    //destructure the 'res.data' which we got back
+    const { data } = await axios.get(`/api/orders/myorders`, config);
+
+    dispatch({
+      type: ORDER_MY_LIST_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ORDER_MY_LIST_FAIL,
       //if error.response exist THEN if data.message exist then send the data.message else the error.message
       payload:
         error.response && error.response.data.message

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { PayPalButton } from 'react-paypal-button-v2';
 import { Link } from 'react-router-dom';
-import { Button, Row, Col, ListGroup, Image, Card } from 'react-bootstrap';
+import { Row, Col, ListGroup, Image, Card } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/CheckoutSteps';
@@ -65,7 +65,7 @@ const OrderScreen = ({ match }) => {
     };
     //=============================
     if (!order || successPay || order._id !== orderId) {
-      //if you don't do this once you pay it will keep refreshing
+      //if you don't do this once you pay, it will keep refreshing(resets everything when payed to prevent bugs)
       dispatch({ type: ORDER_PAY_RESET });
       dispatch(getOrderDetails(orderId));
     } else if (!order.isPaid) {

@@ -65,7 +65,7 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
   if (order) {
     order.isPaid = true;
     order.paidAt = Date.now();
-    //req is the data coming from the paypal 
+    //req is the data coming from the paypal
     order.paymentResult = {
       id: req.body.id,
       status: req.body.status,
@@ -82,4 +82,13 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
   }
 });
 
-export { addOrderItems, getOrderById, updateOrderToPaid };
+// @desc Get logged in user's orders
+// @route GET /api/orders/myorders
+// @access Private
+const getMyOrders = asyncHandler(async (req, res) => {
+  //in a list of order's search through them all and find one that holds a user with an id of ...
+  const orders = await Order.find({ user: req.user._id });
+  res.json(orders);
+});
+
+export { addOrderItems, getOrderById, updateOrderToPaid, getMyOrders };
