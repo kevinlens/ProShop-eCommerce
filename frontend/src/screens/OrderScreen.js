@@ -8,6 +8,7 @@ import Message from '../components/Message';
 import Loader from '../components/CheckoutSteps';
 import { getOrderDetails, payOrder } from '../actions/orderActions';
 import { ORDER_PAY_RESET } from '../constants/orderConstants';
+import { listMyOrders } from '../actions/orderActions';
 
 const OrderScreen = ({ match }) => {
   //
@@ -44,6 +45,7 @@ const OrderScreen = ({ match }) => {
       )
     );
   }
+  
 
   useEffect(() => {
     //=============================
@@ -68,6 +70,7 @@ const OrderScreen = ({ match }) => {
       //if you don't do this once you pay, it will keep refreshing(resets everything when payed to prevent bugs)
       dispatch({ type: ORDER_PAY_RESET });
       dispatch(getOrderDetails(orderId));
+      dispatch(listMyOrders());
     } else if (!order.isPaid) {
       //if the page doesn't have the paypal script already then set it up
       if (!window.paypal) {
