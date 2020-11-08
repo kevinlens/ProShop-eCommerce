@@ -10,6 +10,7 @@ import { getOrderDetails, payOrder } from '../actions/orderActions';
 import { ORDER_PAY_RESET } from '../constants/orderConstants';
 import { listMyOrders } from '../actions/orderActions';
 
+//'history' is coming from the default props.history to help us get the url params value
 const OrderScreen = ({ match }) => {
   //
   const orderId = match.params.id;

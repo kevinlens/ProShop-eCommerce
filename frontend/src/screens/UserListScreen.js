@@ -6,6 +6,7 @@ import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { listUsers, deleteUser } from '../actions/userActions';
 
+//'history' is coming from the default props.history to help us get the url params value
 const UserListScreen = ({ history }) => {
   //
   const dispatch = useDispatch();

@@ -144,7 +144,7 @@ export const register = (name, email, password) => async (dispatch) => {
 
 //
 
-export const getUserDetails = (id) => async (dispatch, getState) => {
+export const getUserDetails = () => async (dispatch, getState) => {
   try {
     dispatch({
       type: USER_DETAILS_REQUEST,
@@ -165,7 +165,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
     //
 
     //destructure the 'res.data' which we got back
-    const { data } = await axios.get(`/api/users/${id}`, config);
+    const { data } = await axios.get('/api/users/profile', config);
 
     dispatch({
       type: USER_DETAILS_SUCCESS,
@@ -317,7 +317,6 @@ export const deleteUser = (id) => async (dispatch, getState) => {
     };
     //
 
-    //destructure the 'res.data' which we got back
     await axios.delete(`/api/users/${id}`, config);
 
     dispatch({
