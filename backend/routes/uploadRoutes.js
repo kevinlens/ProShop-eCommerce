@@ -8,10 +8,10 @@ const storage = multer.diskStorage({
   //'req' is the data sent by user and 'file' is the file sent by user
   destination(req, file, cb) {
     //'uploads/' is where we are sending the user's upload to
-    cd(null, 'uploads/');
+    cb(null, 'uploads/');
   },
   //customize the inputed file's name (has to be unique)
-  filename(req, res, cb) {
+  filename(req, file, cb) {
     //'${path.extname(file.originalname)}' is the extension name like 'jpg' or 'png'
     //so result should be (pic1name)+(date)+(.png)
     cb(
@@ -34,8 +34,8 @@ function checkFileType(file, cb) {
 
   if (extname && mimetype) {
     return cb(null, true);
-  }else{
-    cb('Images only!')
+  } else {
+    cb('Images only!');
   }
 }
 //-----------------
@@ -53,9 +53,9 @@ const upload = multer({
 
 //
 
-router.post('/', upload.single('image'), (req,res)=>{
+router.post('/', upload.single('image'), (req, res) => {
   //gives us our path
-  res.send(`/${req.file.path}`)
-})
+  res.send(`/${req.file.path}`);
+});
 
 export default router;

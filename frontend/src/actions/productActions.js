@@ -13,6 +13,7 @@ import {
   PRODUCT_UPDATE_REQUEST,
   PRODUCT_UPDATE_SUCCESS,
   PRODUCT_UPDATE_FAIL,
+  PRODUCT_CREATE_SUCCESS,
 } from '../constants/productConstants';
 
 //
@@ -141,7 +142,7 @@ export const createProduct = () => async (dispatch, getState) => {
     const { data } = await axios.post(`/api/products`, {}, config);
 
     dispatch({
-      type: PRODUCT_DELETE_SUCCESS,
+      type: PRODUCT_CREATE_SUCCESS,
       payload: data,
     });
   } catch (error) {
