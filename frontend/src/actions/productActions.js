@@ -14,6 +14,9 @@ import {
   PRODUCT_UPDATE_SUCCESS,
   PRODUCT_UPDATE_FAIL,
   PRODUCT_CREATE_SUCCESS,
+  PRODUCT_CREATE_REVIEW_REQUEST,
+  PRODUCT_CREATE_REVIEW_SUCCESS,
+  PRODUCT_CREATE_REVIEW_FAIL,
 } from '../constants/productConstants';
 
 //
@@ -201,6 +204,53 @@ export const updateProduct = (product) => async (dispatch, getState) => {
         error.response && error.response.data.message
           ? error.response.data.message
           : error.message,
+    });
+  }
+};
+
+//
+
+//
+
+//
+
+export const createProductReview = (productId, review) => async (
+  dispatch,
+  getState
+) => {
+  try {
+    dispatch({
+      type: PRODUCT_CREATE_REVIEW_REQUEST,
+    });
+    //
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    //
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    //
+
+    //'review' is basically stored in as 'req.body'
+    await axios.post(`/api/products/${productId}/reviews`, review, config);
+
+    dispatch({
+      type: PRODUCT_CREATE_REVIEW_SUCCESS,
+    });
+  } catch (error) {
+    dispatch({
+      type: PRODUCT_CREATE_REVIEW_FAIL,
+      //if error.response exist THEN if data.message exist then send the data.message else the error.message
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message.replace('Product validation failed: reviews.0.comment: Path', '')
+          : error.message.replace('Product validation failed: reviews.0.comment: Path', ''),
     });
   }
 };
