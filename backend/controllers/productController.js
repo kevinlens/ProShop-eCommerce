@@ -12,9 +12,27 @@ import Product from '../models/ProductModel.js';
 // @route GET /api/products
 // @access Public
 const getProducts = asyncHandler(async (req, res) => {
+
+  const pageSize = 2
+  //search the URL query for current page number
+  const page = Number(req.query.pageNumber) || 1
+
+  //a way to get ANY query after the '?' in our URL
+  const keyword = req.query.keyword
+    ? {
+        name: {
+          //means grab anything like 'iph', it would still grab 'iphone'
+          $regex: req.query.keyword,
+          //means case insensitive
+          $options: 'i',
+        },
+      }
+    : {};
+
   /*we don't have a 'catch' from try,catch method for errors because all the errors gets passed 
     down to our custom made middlware error handlers*/
-  const products = await Product.find({});
+  //'find' and gives you back all of the documents that match that key search
+  const products = await Product.find({ ...keyword });
 
   res.json(products);
 });
@@ -185,7 +203,6 @@ const createProductReview = asyncHandler(async (req, res) => {
     product.rating =
       product.reviews.reduce((acc, item) => item.rating + acc, 0) /
       product.reviews.length;
-
 
     await product.save();
     res.status(201).json({ message: 'Review added' });

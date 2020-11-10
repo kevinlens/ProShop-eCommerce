@@ -25,12 +25,12 @@ import {
 
 //
 
-export const listProducts = () => async (dispatch) => {
+export const listProducts = (keyword = '') => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_LIST_REQUEST });
 
     //destructure the 'res.data' which we got back
-    const { data } = await axios.get('/api/products');
+    const { data } = await axios.get(`/api/products?keyword=${keyword}`);
 
     dispatch({
       type: PRODUCT_LIST_SUCCESS,
@@ -249,8 +249,14 @@ export const createProductReview = (productId, review) => async (
       //if error.response exist THEN if data.message exist then send the data.message else the error.message
       payload:
         error.response && error.response.data.message
-          ? error.response.data.message.replace('Product validation failed: reviews.0.comment: Path', '')
-          : error.message.replace('Product validation failed: reviews.0.comment: Path', ''),
+          ? error.response.data.message.replace(
+              'Product validation failed: reviews.0.comment: Path',
+              ''
+            )
+          : error.message.replace(
+              'Product validation failed: reviews.0.comment: Path',
+              ''
+            ),
     });
   }
 };

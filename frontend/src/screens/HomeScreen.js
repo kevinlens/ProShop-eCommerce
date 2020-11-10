@@ -7,18 +7,21 @@ import Message from '../components/Message';
 
 import { listProducts } from '../actions/productActions';
 
-const HomeScreen = () => {
+const HomeScreen = ({ match }) => {
+  //the 'keyword' from 'match.params.keyword' is what we set in the app.js for the parameter
+  const keyword = match.params.keyword;
+
   //allows you to use the 'dispatch' functionality
   const dispatch = useDispatch();
-  
+
   //grabs product list from global state using 'useSelector'
   const productList = useSelector((state) => state.productList);
   const { loading, error, products } = productList;
 
   useEffect(() => {
     //upon load, dispatch 'listProducts' function
-    dispatch(listProducts());
-  }, [dispatch]);
+    dispatch(listProducts(keyword));
+  }, [dispatch, keyword]);
 
   //=======================================================================
   return (
