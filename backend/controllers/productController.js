@@ -12,10 +12,10 @@ import Product from '../models/ProductModel.js';
 // @route GET /api/products
 // @access Public
 const getProducts = asyncHandler(async (req, res) => {
-
-  const pageSize = 2
+  //total to be displayed on a page
+  const pageSize = 2;
   //search the URL query for current page number
-  const page = Number(req.query.pageNumber) || 1
+  const page = Number(req.query.pageNumber) || 1;
 
   //a way to get ANY query after the '?' in our URL
   const keyword = req.query.keyword
@@ -29,12 +29,24 @@ const getProducts = asyncHandler(async (req, res) => {
       }
     : {};
 
+  //COLLECT DATA ON TOTAL AMOUNT
+  // similar to 'find' but counting all the products received
+  const count = await Product.count({ ...keyword });
+
   /*we don't have a 'catch' from try,catch method for errors because all the errors gets passed 
     down to our custom made middlware error handlers*/
   //'find' and gives you back all of the documents that match that key search
-  const products = await Product.find({ ...keyword });
+  //COLLECT DATA AFTER FILTERS
+  const products = await Product.find({ ...keyword })
+    //limit the amount to be sent to the frontend
+    .limit(pageSize)
+    //a way to decide how much page you should skip based on current page
+    .skip(pageSize * (page - 1));
 
-  res.json(products);
+    //products: products we get back after filters
+    //page: current page and what product that page should be receiving
+    //pages: e.g 6 pages total with 10 products on each one
+  res.json({ products, page, pages: Math.ceil(count / pageSize) });
 });
 
 //
