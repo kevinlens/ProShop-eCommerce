@@ -25,12 +25,18 @@ import {
 
 //
 
-export const listProducts = (keyword = '') => async (dispatch) => {
+//you can configure these default parameters when calling the function
+export const listProducts = (keyword = '', pageNumber = '') => async (
+  dispatch
+) => {
   try {
     dispatch({ type: PRODUCT_LIST_REQUEST });
 
     //destructure the 'res.data' which we got back
-    const { data } = await axios.get(`/api/products?keyword=${keyword}`);
+    //first query string is always '?' and if two or more than you use '&'
+    const { data } = await axios.get(
+      `/api/products?keyword=${keyword}&pageNumber=${pageNumber}`
+    );
 
     dispatch({
       type: PRODUCT_LIST_SUCCESS,

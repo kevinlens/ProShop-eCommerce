@@ -13,7 +13,7 @@ import Product from '../models/ProductModel.js';
 // @access Public
 const getProducts = asyncHandler(async (req, res) => {
   //total to be displayed on a page
-  const pageSize = 2;
+  const pageSize = 10;
   //search the URL query for current page number
   const page = Number(req.query.pageNumber) || 1;
 
@@ -31,7 +31,7 @@ const getProducts = asyncHandler(async (req, res) => {
 
   //COLLECT DATA ON TOTAL AMOUNT
   // similar to 'find' but counting all the products received
-  const count = await Product.count({ ...keyword });
+  const count = await Product.countDocuments({ ...keyword });
 
   /*we don't have a 'catch' from try,catch method for errors because all the errors gets passed 
     down to our custom made middlware error handlers*/
@@ -40,12 +40,13 @@ const getProducts = asyncHandler(async (req, res) => {
   const products = await Product.find({ ...keyword })
     //limit the amount to be sent to the frontend
     .limit(pageSize)
-    //a way to decide how much page you should skip based on current page
+    //a way to decide how much page(with products) you should skip based on current page
     .skip(pageSize * (page - 1));
 
-    //products: products we get back after filters
-    //page: current page and what product that page should be receiving
-    //pages: e.g 6 pages total with 10 products on each one
+  //products: products we get back after filters
+  //page: current page and what product that page should be receiving
+  //pages: e.g 6 pages total with 10 products on each one
+  //Math.ceil() is to round up to the largest integer
   res.json({ products, page, pages: Math.ceil(count / pageSize) });
 });
 

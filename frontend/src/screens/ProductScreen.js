@@ -13,6 +13,7 @@ import {
 import Rating from '../components/Rating';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
+import Paginate from '../components/Paginate'
 import {
   listProductDetails,
   createProductReview,
