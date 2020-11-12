@@ -17,6 +17,9 @@ import {
   PRODUCT_CREATE_REVIEW_REQUEST,
   PRODUCT_CREATE_REVIEW_SUCCESS,
   PRODUCT_CREATE_REVIEW_FAIL,
+  PRODUCT_TOP_REQUEST,
+  PRODUCT_TOP_SUCCESS,
+  PRODUCT_TOP_FAIL,
 } from '../constants/productConstants';
 
 //
@@ -263,6 +266,36 @@ export const createProductReview = (productId, review) => async (
               'Product validation failed: reviews.0.comment: Path',
               ''
             ),
+    });
+  }
+};
+
+//
+
+//
+
+//
+
+//you can configure these default parameters when calling the function
+export const listTopProducts = () => async (dispatch) => {
+  try {
+    dispatch({ type: PRODUCT_TOP_REQUEST });
+
+    //destructure the 'res.data' which we got back
+    const { data } = await axios.get(`/api/products/top`);
+
+    dispatch({
+      type: PRODUCT_TOP_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: PRODUCT_TOP_FAIL,
+      //if error.response exist THEN if data.message exist then send the data.message else the error.message
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
     });
   }
 };
