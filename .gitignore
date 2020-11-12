@@ -10,7 +10,8 @@ node_modules/
 /coverage
 
 # production
-/build
+#Important that you have your frontend file
+/frontend/build
 
 # misc
 .DS_Store

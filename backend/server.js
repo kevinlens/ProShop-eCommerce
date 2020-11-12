@@ -19,10 +19,6 @@ const app = express();
 //allows json data in body to be accepted
 app.use(express.json());
 
-//-----
-app.get('/', (req, res) => {
-  res.send('API is running...');
-});
 //===========================================================
 
 app.use('/api/products', productRoutes);
@@ -34,14 +30,34 @@ app.get('/api/config/paypal', (req, res) =>
   res.send(process.env.PAYPAL_CLIENT_ID)
 );
 
-//WHEN USING MULTER FOR FILE/IMAGES UPLOADS
-
 //'__dirname' means 'point to the current directory'
 //__dirname is not avaiable in esModules(newest NodeJs version), only in commonJs, so here we are mimicking it instead
 const __dirname = path.resolve();
 
+//we change it from 'development' to 'production' manually by hand once we are finished with the project
+if (process.env.NODE_ENV === 'production') {
+  //take us to the frontend 'build' folder
+  //make the frontend 'build' folder static(by using express)
+  //NOTE: the build folder is automatically created upon launch in Heroku
+  app.use(express.static(path.join(__dirname, '/frontend/build')));
+
+  //'*' means: any routes that is not our /api/ routes, will be pointing to the 'index.html'
+  app.get('*', (req, res) =>
+    res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
+  );
+} else {
+  //when in production
+  app.get('/', (req, res) => {
+    res.send('API is running...');
+  });
+}
+
+//-------------------------------
+
+//WHEN USING MULTER FOR FILE/IMAGES UPLOADS
+
 //take us to the frontend 'uploads' folder
-//make the frontend 'uploads' foleder static(by using express)
+//make the frontend 'uploads' folder static(by using express)
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
 //===========================================================
