@@ -246,7 +246,7 @@ const OrderScreen = ({ match, history }) => {
                     className='btn btn-block'
                     onClick={deliverHandler}
                   >
-                    Mark As Delivered
+                    Mark As Shipped
                   </Button>
                 </ListGroup.Item>
               )}

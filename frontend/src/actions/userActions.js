@@ -26,6 +26,7 @@ import {
   USER_UPDATE_FAIL,
   USER_UPDATE_REQUEST,
 } from '../constants/userConstants';
+import { CART_RESET } from '../constants/cartConstants';
 import { ORDER_MY_LIST_RESET } from '../constants/orderConstants';
 //
 
@@ -85,6 +86,8 @@ export const logout = () => (dispatch) => {
   dispatch({ type: USER_DETAILS_RESET });
   dispatch({ type: ORDER_MY_LIST_RESET });
   dispatch({ type: USER_LIST_RESET });
+  dispatch({ type: CART_RESET });
+  localStorage.removeItem('cartItems');
 };
 
 //

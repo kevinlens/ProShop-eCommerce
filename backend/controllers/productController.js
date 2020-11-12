@@ -13,7 +13,7 @@ import Product from '../models/ProductModel.js';
 // @access Public
 const getProducts = asyncHandler(async (req, res) => {
   //total to be displayed on a page
-  const pageSize = 10;
+  const pageSize = 8;
   //search the URL query for current page number
   const page = Number(req.query.pageNumber) || 1;
 
